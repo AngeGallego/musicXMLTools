@@ -99,6 +99,12 @@
                     <text>Hap</text>
                 </lyric>
             </note>
+            <note>
+                <rest/>
+                <duration>3</duration>
+                <voice>1</voice>
+                <type>quarter</type>
+            </note>
             <note default-x="148.50" default-y="-45.00">
                 <pitch>
                     <step>D</step>
@@ -471,12 +477,7 @@
                     <text>you!</text>
                 </lyric>
             </note>
-            <note>
-                <rest/>
-                <duration>2</duration>
-                <voice>1</voice>
-                <type>quarter</type>
-            </note>
+
             <barline location="right">
                 <bar-style>light-heavy</bar-style>
             </barline>
