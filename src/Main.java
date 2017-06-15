@@ -1,4 +1,5 @@
 
+import MusicXMLDiff.Comparator;
 import MusicXMLDiff.LevenshteinComparator;
 import MusicXMLEntities.Measure;
 import MusicXMLEntities.MusicElement;
@@ -39,15 +40,15 @@ public class Main {
             /*
              ** Computing edit distance of files with or without backtrace
               */
-            LevenshteinComparator tiny = new LevenshteinComparator(tinyFile, true);
-            LevenshteinComparator medium = new LevenshteinComparator(file, true);
-            LevenshteinComparator big = new LevenshteinComparator(bigFile);
+            Comparator tiny = new LevenshteinComparator(tinyFile, true);
+            Comparator medium = new LevenshteinComparator(file, true);
+            Comparator big = new LevenshteinComparator(bigFile);
 
             System.out.println("\nEdition script for tiny file :");
-            System.out.println("Edit Distance tiny : " + tiny.editDistance(tinyFile2));
+            System.out.println("Edit Distance tiny : " + tiny.compare(tinyFile2));
             System.out.println("\nEdition script for medium file :");
-            System.out.println("Edit Distance medium : " + medium.editDistance(file2));
-            System.out.println("Edit Distance big : " + big.editDistance(bigFile2));
+            System.out.println("Edit Distance medium : " + medium.compare(file2));
+            System.out.println("Edit Distance big : " + big.compare(bigFile2));
         } catch (SAXException |
                  ParserConfigurationException |
                  IOException e) {

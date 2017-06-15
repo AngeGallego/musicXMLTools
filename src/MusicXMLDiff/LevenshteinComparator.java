@@ -4,19 +4,17 @@ import MusicXMLParser.MusicXMLFile;
 
 import java.util.ArrayList;
 
-public class LevenshteinComparator {
+public class LevenshteinComparator extends Comparator {
 
-    public static int MAX_SUBSTITUTION_COST = 3;
-    private ArrayList<String> mErrorLog;
-    private MusicXMLFile mGroundTruth;
     private boolean mPrintLogs = false;
+    private ArrayList<String> mErrorLog;
 
     public LevenshteinComparator(MusicXMLFile groundTruth) {
-        mGroundTruth = groundTruth;
+        super(groundTruth);
     }
 
     public LevenshteinComparator(MusicXMLFile groundTruth, boolean printLogs) {
-        mGroundTruth = groundTruth;
+        super(groundTruth);
         mPrintLogs = printLogs;
     }
 
@@ -24,7 +22,7 @@ public class LevenshteinComparator {
         mPrintLogs = loggingEnabled;
     }
 
-    public float editDistance(MusicXMLFile evaluated) {
+    public float compare(MusicXMLFile evaluated) {
         float[][] distanceMatrix = new float[mGroundTruth.length() + 1][evaluated.length() + 1];
 
         for (int i = 0; i <= mGroundTruth.length(); i++)
