@@ -1,5 +1,6 @@
 package MusicXMLEntities;
 
+import MusicXMLDiff.Comparator;
 import XMLUtils.XMLUtils;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -46,7 +47,7 @@ public class Note extends MusicElement {
 
     @Override
     public int compareTo(MusicElement element) {
-        return equals(element) ? 0 : 3;
+        return equals(element) ? 0 : Comparator.MAX_SUBSTITUTION_COST;
     }
 
     @Override

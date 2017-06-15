@@ -4,7 +4,7 @@ import MusicXMLParser.MusicXMLFile;
 
 public abstract class Comparator {
 
-    static int MAX_SUBSTITUTION_COST = 3;
+    public static int MAX_SUBSTITUTION_COST = 3; // can't be 0
     MusicXMLFile mGroundTruth;
 
     Comparator(MusicXMLFile groundTruth) {

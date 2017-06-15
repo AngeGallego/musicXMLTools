@@ -1,5 +1,6 @@
 package MusicXMLEntities;
 
+import MusicXMLDiff.Comparator;
 import org.w3c.dom.Node;
 
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public class Measure extends MusicElement implements Iterable<MusicElement> {
 
     @Override
     public int compareTo(MusicElement element) {
-        return equals(element) ? 0 : 3;
+        return equals(element) ? 0 : Comparator.MAX_SUBSTITUTION_COST;
     }
 
     @Override

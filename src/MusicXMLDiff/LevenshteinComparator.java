@@ -35,7 +35,7 @@ public class LevenshteinComparator extends Comparator {
             for (int j = 1; j <= evaluated.length(); j++) {
                 substitutionCost = mGroundTruth.getElement(i - 1).compareTo(evaluated.getElement(j - 1));
                 distanceMatrix[i][j] = minimum(
-                        distanceMatrix[i - 1][j] + MAX_SUBSTITUTION_COST, // could be +5 with substitutionCost varying from 0 to 5
+                        distanceMatrix[i - 1][j] + MAX_SUBSTITUTION_COST,
                         distanceMatrix[i][j - 1] + MAX_SUBSTITUTION_COST,
                         distanceMatrix[i - 1][j - 1] + substitutionCost
                 );
