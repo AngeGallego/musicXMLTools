@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class LevenshteinComparator {
 
+    public static int MAX_SUBSTITUTION_COST = 3;
     private ArrayList<String> mErrorLog;
     private MusicXMLFile mGroundTruth;
     private boolean mPrintLogs = false;
@@ -23,8 +24,8 @@ public class LevenshteinComparator {
         mPrintLogs = loggingEnabled;
     }
 
-    public int editDistance(MusicXMLFile evaluated) {
-        int[][] distanceMatrix = new int[mGroundTruth.length() + 1][evaluated.length() + 1];
+    public float editDistance(MusicXMLFile evaluated) {
+        float[][] distanceMatrix = new float[mGroundTruth.length() + 1][evaluated.length() + 1];
 
         for (int i = 0; i <= mGroundTruth.length(); i++)
             distanceMatrix[i][0] = i;
@@ -34,14 +35,10 @@ public class LevenshteinComparator {
         for (int i = 1; i <= mGroundTruth.length(); i++) {
             int substitutionCost;
             for (int j = 1; j <= evaluated.length(); j++) {
-                if (evaluated.getElement(j - 1).equals(mGroundTruth.getElement(i - 1)))
-                    substitutionCost = 0;
-                else
-                    substitutionCost = 1;
-                //substitutionCost = symbolDistance(a.getElement(i - 1), b.getElement(j - 1));
+                substitutionCost = mGroundTruth.getElement(i - 1).compareTo(evaluated.getElement(j - 1));
                 distanceMatrix[i][j] = minimum(
-                        distanceMatrix[i - 1][j] + 1, // could be +5 with substitutionCost varying from 0 to 5
-                        distanceMatrix[i][j - 1] + 1,
+                        distanceMatrix[i - 1][j] + MAX_SUBSTITUTION_COST, // could be +5 with substitutionCost varying from 0 to 5
+                        distanceMatrix[i][j - 1] + MAX_SUBSTITUTION_COST,
                         distanceMatrix[i - 1][j - 1] + substitutionCost
                 );
             }
@@ -51,14 +48,14 @@ public class LevenshteinComparator {
             createBackTrace(distanceMatrix, evaluated, mGroundTruth.length(), evaluated.length());
             printBackTrace();
         }
-        return distanceMatrix[mGroundTruth.length()][evaluated.length()];
+        return distanceMatrix[mGroundTruth.length()][evaluated.length()] / MAX_SUBSTITUTION_COST;
     }
 
-    private void createBackTrace(int[][] distanceMatrix, MusicXMLFile evaluated, int x, int y) {
+    private void createBackTrace(float[][] distanceMatrix, MusicXMLFile evaluated, int x, int y) {
         if (x == 0 && y == 0)
             return ;
-        int current = distanceMatrix[x][y];
-        int minimum = minimum(distanceMatrix[x - 1][y - 1], distanceMatrix[x - 1][y], distanceMatrix[x][y - 1]);
+        float current = distanceMatrix[x][y];
+        float minimum = minimum(distanceMatrix[x - 1][y - 1], distanceMatrix[x - 1][y], distanceMatrix[x][y - 1]);
         if (minimum < current) {
             if (distanceMatrix[x - 1][y - 1] == minimum) {
                 mErrorLog.add("Substitution of " + mGroundTruth.getElement(x - 1) + " with " + evaluated.getElement(y - 1));
@@ -82,6 +79,9 @@ public class LevenshteinComparator {
     }
 
     private int minimum(int a, int b, int c) {
+        return Math.min(Math.min(a, b), c);
+    }
+    private float minimum(float a, float b, float c) {
         return Math.min(Math.min(a, b), c);
     }
 }

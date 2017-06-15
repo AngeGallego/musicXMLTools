@@ -31,6 +31,11 @@ public class Measure extends MusicElement implements Iterable<MusicElement> {
     }
 
     @Override
+    public int compareTo(MusicElement element) {
+        return equals(element) ? 0 : 3;
+    }
+
+    @Override
     public Iterator<MusicElement> iterator() {
         return mElements.iterator();
     }

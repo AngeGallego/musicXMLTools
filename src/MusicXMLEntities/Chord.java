@@ -38,6 +38,11 @@ public class Chord extends MusicElement implements Iterable<Note> {
     }
 
     @Override
+    public int compareTo(MusicElement element) {
+        return equals(element) ? 0 : 3;
+    }
+
+    @Override
     public String toString() {
         return "Chord{" +
                 "mNotes=" + mNotes +

@@ -45,6 +45,11 @@ public class Note extends MusicElement {
     }
 
     @Override
+    public int compareTo(MusicElement element) {
+        return equals(element) ? 0 : 3;
+    }
+
+    @Override
     public String toString() {
         return "Note{" +
                 "mPitch=" + mPitch +

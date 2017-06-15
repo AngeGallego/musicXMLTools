@@ -36,6 +36,11 @@ public class Part extends MusicElement implements Iterable<Measure> {
     }
 
     @Override
+    public int compareTo(MusicElement element) {
+        return equals(element) ? 0 : 3;
+    }
+
+    @Override
     public String toString() {
         return "Part{" +
                 "mMeasures=" + mMeasures +
