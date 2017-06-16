@@ -2,12 +2,10 @@ package MusicXMLDiff;
 
 import MusicXMLParser.MusicXMLFile;
 
-import java.util.ArrayList;
-
 public class LevenshteinComparator extends Comparator {
 
     private boolean mPrintLogs = false;
-    private ArrayList<String> mErrorLog;
+    private DiffLogger mLogger = new DiffLogger();
 
     public LevenshteinComparator(MusicXMLFile groundTruth) {
         super(groundTruth);
@@ -42,7 +40,6 @@ public class LevenshteinComparator extends Comparator {
             }
         }
         if (mPrintLogs) {
-            mErrorLog = new ArrayList<>();
             createBackTrace(distanceMatrix, evaluated, mGroundTruth.length(), evaluated.length());
             printBackTrace();
         }
@@ -56,13 +53,13 @@ public class LevenshteinComparator extends Comparator {
         float minimum = minimum(distanceMatrix[x - 1][y - 1], distanceMatrix[x - 1][y], distanceMatrix[x][y - 1]);
         if (minimum < current) {
             if (distanceMatrix[x - 1][y - 1] == minimum) {
-                mErrorLog.add("Substitution of " + mGroundTruth.getElement(x - 1) + " with " + evaluated.getElement(y - 1));
+                mLogger.stackMessage("Substitution of " + mGroundTruth.getElement(x - 1) + " with " + evaluated.getElement(y - 1));
                 createBackTrace(distanceMatrix, evaluated, x - 1, y - 1);
             } else if (distanceMatrix[x - 1][y] == minimum) {
-                mErrorLog.add("Deletion of " + mGroundTruth.getElement(x - 1));
+                mLogger.stackMessage("Deletion of " + mGroundTruth.getElement(x - 1));
                 createBackTrace(distanceMatrix, evaluated, x - 1, y);
             } else if (distanceMatrix[x][y - 1] == minimum) {
-                mErrorLog.add("Addition of " + evaluated.getElement(y - 1));
+                mLogger.stackMessage("Addition of " + evaluated.getElement(y - 1));
                 createBackTrace(distanceMatrix, evaluated, x, y - 1);
             }
         }
@@ -71,9 +68,7 @@ public class LevenshteinComparator extends Comparator {
     }
 
     private void printBackTrace() {
-        for (int i = mErrorLog.size() - 1; i >= 0; --i) {
-            System.out.println(mErrorLog.get(i));
-        }
+        mLogger.popAllMessages();
     }
 
     private int minimum(int a, int b, int c) {
