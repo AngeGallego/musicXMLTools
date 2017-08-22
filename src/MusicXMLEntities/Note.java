@@ -1,10 +1,13 @@
 package MusicXMLEntities;
 
 import MusicXMLDiff.Comparator;
+import MusicXMLDiff.ComparisonResult;
 import XMLUtils.XMLUtils;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import java.util.ArrayList;
 
 public class Note extends MusicElement {
 
@@ -42,12 +45,32 @@ public class Note extends MusicElement {
             return false;
         }
         final Note note = (Note) obj;
-        return note.mPitch.equals(mPitch) && note.mDuration.equals(mDuration) && note.mType.equals(mType);
+        if (mAttrs.division().equals(note.mAttrs.division()))
+            return note.mPitch.equals(mPitch) && note.mDuration.equals(mDuration) && note.mType.equals(mType);
+        else
+            return note.mPitch.equals(mPitch) && note.mType.equals(mType);
     }
 
     @Override
     public int compareTo(MusicElement element) {
         return equals(element) ? 0 : Comparator.MAX_SUBSTITUTION_COST;
+    }
+
+    @Override
+    public ArrayList<ComparisonResult> inDepthComparison(MusicElement element) {
+        if (element == null)
+            return null;
+        if (!Note.class.isAssignableFrom(element.getClass()))
+            return null;
+        ArrayList<ComparisonResult> results = new ArrayList<>();
+        final Note note = (Note) element;
+        if (!mPitch.equals(note.mPitch))
+            results.add(ComparisonResult.HARMONIC);
+        if (!mDuration.equals(note.mDuration))
+            results.add(ComparisonResult.RYTHMIC);
+        if (!mType.equals(note.mType))
+            results.add(ComparisonResult.TYPE);
+        return results;
     }
 
     @Override

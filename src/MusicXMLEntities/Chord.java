@@ -1,6 +1,7 @@
 package MusicXMLEntities;
 
 import MusicXMLDiff.Comparator;
+import MusicXMLDiff.ComparisonResult;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -42,6 +43,11 @@ public class Chord extends MusicElement implements Iterable<Note> {
     @Override
     public int compareTo(MusicElement element) {
         return equals(element) ? 0 : Comparator.MAX_SUBSTITUTION_COST;
+    }
+
+    @Override
+    public ArrayList<ComparisonResult> inDepthComparison(MusicElement element) {
+        return null;
     }
 
     @Override

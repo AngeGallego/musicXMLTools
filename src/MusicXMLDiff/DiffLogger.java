@@ -18,7 +18,7 @@ class DiffLogger {
         mLogger.setUseParentHandlers(false);
         for (Handler handler : mLogger.getHandlers())
             mLogger.removeHandler(handler);
-        StreamHandler streamHandler = new StreamHandler(os, new MessageFormatter()) {
+            StreamHandler streamHandler = new StreamHandler(os, new MessageFormatter()) {
             @Override
             public synchronized void publish(final LogRecord record) {
                 super.publish(record);
@@ -46,5 +46,9 @@ class DiffLogger {
     void popAllMessages() {
         while (!mMessageStack.isEmpty())
             mLogger.log(mLogLevel, mMessageStack.pop());
+    }
+
+    void logComparisonResult(ComparisonResult result) {
+        mLogger.log(mLogLevel, result.getMessage());
     }
 }

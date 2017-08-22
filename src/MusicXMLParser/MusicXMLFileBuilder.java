@@ -10,6 +10,7 @@ class MusicXMLFileBuilder {
     private MusicXMLFile mFile;
     private Part mCurrentPart;
     private Measure mCurrentMeasure;
+    private MeasureAttributes mCurrentMeasureAttrs;
     private Chord mCurrentChord;
     private boolean mIsChordInConstruction = false;
 
@@ -43,8 +44,18 @@ class MusicXMLFileBuilder {
         if (attributes != null) {
             mIsChordInConstruction = false;
             MeasureAttributes attrs = new MeasureAttributes(attributes);
+            mCurrentMeasureAttrs = attrs;
             mCurrentMeasure.pushElement(attrs);
             mFile.pushElement(attrs);
+        }
+    }
+
+    void pushDynamics(Element dynamics) {
+        if (dynamics != null) {
+            mIsChordInConstruction = false;
+            Dynamics dyna = new Dynamics(dynamics);
+            mCurrentMeasure.pushElement(dyna);
+            mFile.pushElement(dyna);
         }
     }
 
@@ -61,6 +72,7 @@ class MusicXMLFileBuilder {
 
     private void tryPushChord() {
         if (!mIsChordInConstruction && mCurrentChord != null) {
+            mCurrentChord.setAttrs(mCurrentMeasureAttrs);
             mCurrentMeasure.pushElement(mCurrentChord);
             mFile.pushElement(mCurrentChord);
             mCurrentChord = null;
@@ -72,13 +84,16 @@ class MusicXMLFileBuilder {
             mCurrentChord = new Chord();
             mIsChordInConstruction = true;
         }
-        mCurrentChord.pushNote(new Note(chordNote));
+        Note note = new Note(chordNote);
+        note.setAttrs(mCurrentMeasureAttrs);
+        mCurrentChord.pushNote(note);
     }
 
     private void pushNote(Element elemNote) {
         mIsChordInConstruction = false;
         tryPushChord();
         Note note = new Note(elemNote);
+        note.setAttrs(mCurrentMeasureAttrs);
         mCurrentMeasure.pushElement(note);
         mFile.pushElement(note);
     }
@@ -87,12 +102,14 @@ class MusicXMLFileBuilder {
         mIsChordInConstruction = false;
         tryPushChord();
         Rest rest = new Rest(elemRest);
+        rest.setAttrs(mCurrentMeasureAttrs);
         mCurrentMeasure.pushElement(rest);
         mFile.pushElement(rest);
     }
 
     void flushChords() {
         if (mCurrentChord != null) {
+            mCurrentChord.setAttrs(mCurrentMeasureAttrs);
             mCurrentMeasure.pushElement(mCurrentChord);
             mFile.pushElement(mCurrentChord);
             mCurrentChord = null;

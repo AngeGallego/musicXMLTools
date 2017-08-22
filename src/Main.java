@@ -24,6 +24,11 @@ public class Main {
             /*
              ** Parsing all the files
               */
+
+            MusicXMLFile audiveris1 = parser.parse("/home/galleg_a/musicXMLTools/src/XMLSamples/ground-lg-302588546126612838.xml");
+            MusicXMLFile audiveris2 = parser.parse("/home/galleg_a/musicXMLTools/src/XMLSamples/compared-lg-302588546126612838.xml");
+            MusicXMLFile audiveris3 = parser.parse("/home/galleg_a/musicXMLTools/src/XMLSamples/2ndcompared-lg-302588546126612838.xml");
+
             MusicXMLFile tinyFile = parser.parse("/home/galleg_a/musicXMLTools/src/XMLSamples/tinyMusic.xml");
             MusicXMLFile tinyFile2 = parser.parse("/home/galleg_a/musicXMLTools/src/XMLSamples/tinyMusic2.xml");
             MusicXMLFile file = parser.parse("/home/galleg_a/musicXMLTools/src/XMLSamples/music.xml");
@@ -41,14 +46,23 @@ public class Main {
              ** Computing edit distance of files with or without backtrace
               */
             Comparator tiny = new LevenshteinComparator(tinyFile, true);
-            Comparator medium = new LevenshteinComparator(file, true);
-            Comparator big = new LevenshteinComparator(bigFile);
+            Comparator medium = new LevenshteinComparator(file, false);
+            Comparator big = new LevenshteinComparator(bigFile, true);
+            Comparator audiveris = new LevenshteinComparator(audiveris1, true);
+/*
+            System.out.println("\nEdition script for tiny file :");
+            System.out.println("Edit Distance tiny : " + audiveris.compare(audiveris2));
+            System.out.println("\nEdition script for tiny file :");
+            System.out.println("Edit Distance tiny : " + audiveris.compare(audiveris3));
+            System.out.println("nb of symbols : " + audiveris3.length());
+*/
 
             System.out.println("\nEdition script for tiny file :");
             System.out.println("Edit Distance tiny : " + tiny.compare(tinyFile2));
             System.out.println("\nEdition script for medium file :");
             System.out.println("Edit Distance medium : " + medium.compare(file2));
             System.out.println("Edit Distance big : " + big.compare(bigFile2));
+
         } catch (SAXException |
                  ParserConfigurationException |
                  IOException e) {

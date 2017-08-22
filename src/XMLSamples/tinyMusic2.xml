@@ -1,5 +1,8 @@
 <part id="P1">
     <measure number="1" width="190.00">
+        <dynamics default-x="56" default-y="-67" halign="left">
+            <ppp/>
+        </dynamics>
         <print>
             <system-layout>
                 <system-margins>
@@ -28,6 +31,7 @@
                 <step>D</step>
                 <octave>4</octave>
             </pitch>
+            <rest/>
             <duration>1</duration>
             <voice>1</voice>
             <type>eighth</type>
@@ -40,10 +44,25 @@
         </note>
         <note default-x="148.50" default-y="-45.00">
             <pitch>
-                <step>C</step>
+                <step>T</step>
                 <octave>4</octave>
             </pitch>
             <duration>1</duration>
+            <voice>1</voice>
+            <type>eighth</type>
+            <stem>up</stem>
+            <beam number="1">end</beam>
+            <lyric number="1">
+                <syllabic>end</syllabic>
+                <text>py</text>
+            </lyric>
+        </note>
+        <note default-x="148.50" default-y="-45.00">
+            <pitch> <!-- harmonic -->
+                <step>D</step>
+                <octave>4</octave>
+            </pitch>
+            <duration>1</duration> <!-- rythmic -->
             <voice>1</voice>
             <type>eighth</type>
             <stem>up</stem>

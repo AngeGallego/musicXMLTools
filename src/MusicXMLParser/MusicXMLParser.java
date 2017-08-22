@@ -67,7 +67,8 @@ public class MusicXMLParser {
     private void parseMeasure(Node xmlMeasure) {
 
         if (xmlMeasure.getNodeType() == Node.ELEMENT_NODE) {
-            //parseAttributes((Element) xmlMeasure);
+            parseAttributes((Element) xmlMeasure);
+            parseDynamics((Element) xmlMeasure);
             NodeList notes = ((Element) xmlMeasure).getElementsByTagName("note");
 
             for (int i = 0; i < notes.getLength(); i++) {
@@ -78,6 +79,18 @@ public class MusicXMLParser {
                 }
             }
             mFileBuilder.flushChords();
+        }
+    }
+
+    private void parseDynamics(Element xmlMeasure) {
+        NodeList attributes = xmlMeasure.getElementsByTagName("dynamics");
+
+        for (int i = 0; i < attributes.getLength(); i++) {
+            Node xmlAttribute = attributes.item(i);
+            if (xmlAttribute.getNodeType() == Node.ELEMENT_NODE) {
+                Element element = (Element) xmlAttribute;
+                mFileBuilder.pushDynamics(element);
+            }
         }
     }
 

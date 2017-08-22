@@ -1,10 +1,13 @@
 package MusicXMLEntities;
 
 import MusicXMLDiff.Comparator;
+import MusicXMLDiff.ComparisonResult;
 import XMLUtils.XMLUtils;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import java.util.ArrayList;
 
 public class Rest extends MusicElement {
 
@@ -38,12 +41,30 @@ public class Rest extends MusicElement {
             return false;
         }
         final Rest rest = (Rest) obj;
-        return rest.mType.equals(mType) && rest.mDuration.equals(mDuration);
+        if (mAttrs.division().equals(rest.mAttrs.division()))
+            return rest.mType.equals(mType) && rest.mDuration.equals(mDuration);
+        else
+            return rest.mType.equals(mType);
     }
 
     @Override
     public int compareTo(MusicElement element) {
         return equals(element) ? 0 : Comparator.MAX_SUBSTITUTION_COST;
+    }
+
+    @Override
+    public ArrayList<ComparisonResult> inDepthComparison(MusicElement element) {
+        if (element == null)
+            return null;
+        if (!Rest.class.isAssignableFrom(element.getClass()))
+            return null;
+        ArrayList<ComparisonResult> results = new ArrayList<>();
+        final Rest rest = (Rest) element;
+        if (!mDuration.equals(rest.mDuration))
+            results.add(ComparisonResult.RYTHMIC);
+        if (!mType.equals(rest.mType))
+            results.add(ComparisonResult.TYPE);
+        return results;
     }
 
     @Override
