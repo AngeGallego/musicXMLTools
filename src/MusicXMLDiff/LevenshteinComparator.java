@@ -1,6 +1,5 @@
 package MusicXMLDiff;
 
-import MusicXMLEntities.*;
 import MusicXMLParser.MusicXMLFile;
 
 public class LevenshteinComparator extends Comparator {
@@ -26,7 +25,7 @@ public class LevenshteinComparator extends Comparator {
 
     //Todo: make a new ComparisonResult class which is more flexible and complete (handle multiple errors, additional log, ...)
 
-    public float compare(MusicXMLFile evaluated) {
+    public String compare(MusicXMLFile evaluated) {
         float[][] distanceMatrix = new float[mGroundTruth.length() + 1][evaluated.length() + 1];
 
         for (int i = 0; i <= mGroundTruth.length(); i++)
@@ -48,9 +47,9 @@ public class LevenshteinComparator extends Comparator {
         if (mPrintLogs) {
             createBackTrace(distanceMatrix, evaluated, mGroundTruth.length(), evaluated.length());
             printBackTrace();
-            mErrorClassifier.report();
         }
-        return distanceMatrix[mGroundTruth.length()][evaluated.length()] / MAX_SUBSTITUTION_COST;
+        return mErrorClassifier.summary(distanceMatrix[mGroundTruth.length()][evaluated.length()] / MAX_SUBSTITUTION_COST);
+        //return distanceMatrix[mGroundTruth.length()][evaluated.length()] / MAX_SUBSTITUTION_COST;
     }
 
     private void createBackTrace(float[][] distanceMatrix, MusicXMLFile evaluated, int x, int y) {

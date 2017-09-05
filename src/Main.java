@@ -24,17 +24,17 @@ public class Main {
             /*
              ** Parsing all the files
               */
-
-            MusicXMLFile audiveris1 = parser.parse("/home/galleg_a/musicXMLTools/src/XMLSamples/ground-lg-302588546126612838.xml");
-            MusicXMLFile audiveris2 = parser.parse("/home/galleg_a/musicXMLTools/src/XMLSamples/compared-lg-302588546126612838.xml");
-            MusicXMLFile audiveris3 = parser.parse("/home/galleg_a/musicXMLTools/src/XMLSamples/2ndcompared-lg-302588546126612838.xml");
-
-            MusicXMLFile tinyFile = parser.parse("/home/galleg_a/musicXMLTools/src/XMLSamples/tinyMusic.xml");
-            MusicXMLFile tinyFile2 = parser.parse("/home/galleg_a/musicXMLTools/src/XMLSamples/tinyMusic2.xml");
-            MusicXMLFile file = parser.parse("/home/galleg_a/musicXMLTools/src/XMLSamples/music.xml");
-            MusicXMLFile file2 = parser.parse("/home/galleg_a/musicXMLTools/src/XMLSamples/music2.xml");
-            MusicXMLFile bigFile = parser.parse("/home/galleg_a/musicXMLTools/src/XMLSamples/bigMusic.xml");
-            MusicXMLFile bigFile2 = parser.parse("/home/galleg_a/musicXMLTools/src/XMLSamples/bigMusic2.xml");
+/*
+            MusicXMLFile audiveris1 = parser.parse("/home/galleg_a/audiveris_mirrored/musicXMLTools/src/XMLSamples/ground-lg-302588546126612838.xml");
+            MusicXMLFile audiveris2 = parser.parse("/home/galleg_a/audiveris_mirrored/musicXMLTools/src/XMLSamples/compared-lg-302588546126612838.xml");
+            MusicXMLFile audiveris3 = parser.parse("/home/galleg_a/audiveris_mirrored/musicXMLTools/src/XMLSamples/2ndcompared-lg-302588546126612838.xml");
+*/
+            MusicXMLFile tinyFile = parser.parse("/home/galleg_a/audiveris_mirrored/musicXMLTools/src/XMLSamples/tinyMusic.xml");
+            MusicXMLFile tinyFile2 = parser.parse("/home/galleg_a/audiveris_mirrored/musicXMLTools/src/XMLSamples/tinyMusic2.xml");
+            MusicXMLFile file = parser.parse("/home/galleg_a/audiveris_mirrored/musicXMLTools/src/XMLSamples/music.xml");
+            MusicXMLFile file2 = parser.parse("/home/galleg_a/audiveris_mirrored/musicXMLTools/src/XMLSamples/music2.xml");
+            MusicXMLFile bigFile = parser.parse("/home/galleg_a/audiveris_mirrored/musicXMLTools/src/XMLSamples/bigMusic.xml");
+            MusicXMLFile bigFile2 = parser.parse("/home/galleg_a/audiveris_mirrored/musicXMLTools/src/XMLSamples/bigMusic2.xml");
 
             /*
              ** Displaying a file
@@ -48,7 +48,7 @@ public class Main {
             Comparator tiny = new LevenshteinComparator(tinyFile, true);
             Comparator medium = new LevenshteinComparator(file, false);
             Comparator big = new LevenshteinComparator(bigFile, true);
-            Comparator audiveris = new LevenshteinComparator(audiveris1, true);
+            //Comparator audiveris = new LevenshteinComparator(audiveris1, false);
 /*
             System.out.println("\nEdition script for tiny file :");
             System.out.println("Edit Distance tiny : " + audiveris.compare(audiveris2));

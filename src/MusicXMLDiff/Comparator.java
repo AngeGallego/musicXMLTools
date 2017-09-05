@@ -11,5 +11,5 @@ public abstract class Comparator {
         mGroundTruth = groundTruth;
     }
 
-    public abstract float compare(MusicXMLFile evaluated);
+    public abstract String compare(MusicXMLFile evaluated);
 }
