@@ -58,11 +58,11 @@ public class Note extends MusicElement {
 
     @Override
     public ArrayList<ComparisonResult> inDepthComparison(MusicElement element) {
-        if (element == null)
-            return null;
-        if (!Note.class.isAssignableFrom(element.getClass()))
-            return null;
         ArrayList<ComparisonResult> results = new ArrayList<>();
+        if (element == null)
+            return results;
+        if (!Note.class.isAssignableFrom(element.getClass()))
+            return results;
         final Note note = (Note) element;
         if (!mPitch.equals(note.mPitch))
             results.add(ComparisonResult.HARMONIC);

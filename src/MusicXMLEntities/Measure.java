@@ -44,7 +44,7 @@ public class Measure extends MusicElement implements Iterable<MusicElement> {
 
     @Override
     public ArrayList<ComparisonResult> inDepthComparison(MusicElement element) {
-        return null;
+        return new ArrayList<>();
     }
 
     @Override

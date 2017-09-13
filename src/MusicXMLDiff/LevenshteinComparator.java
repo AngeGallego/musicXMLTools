@@ -2,6 +2,9 @@ package MusicXMLDiff;
 
 import MusicXMLParser.MusicXMLFile;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class LevenshteinComparator extends Comparator {
 
     private boolean mPrintLogs = false;
@@ -45,13 +48,14 @@ public class LevenshteinComparator extends Comparator {
             }
         }
         if (mPrintLogs) {
-            createBackTrace(distanceMatrix, evaluated, mGroundTruth.length(), evaluated.length());
+            createBackTrace(distanceMatrix, evaluated);
+            //createBackTrace(distanceMatrix, evaluated, mGroundTruth.length(), evaluated.length());
             printBackTrace();
         }
         return mErrorClassifier.summary(distanceMatrix[mGroundTruth.length()][evaluated.length()] / MAX_SUBSTITUTION_COST);
-        //return distanceMatrix[mGroundTruth.length()][evaluated.length()] / MAX_SUBSTITUTION_COST;
     }
 
+    // recursive version
     private void createBackTrace(float[][] distanceMatrix, MusicXMLFile evaluated, int x, int y) {
         if (x == 0 && y == 0)
             return ;
@@ -60,8 +64,8 @@ public class LevenshteinComparator extends Comparator {
         if (minimum < current) {
             if (distanceMatrix[x - 1][y - 1] == minimum) {
                 mLogger.stackMessage("Substitution of " + mGroundTruth.getElement(x - 1) + " with " + evaluated.getElement(y - 1));
-                createBackTrace(distanceMatrix, evaluated, x - 1, y - 1);
                 mErrorClassifier.compareElements(mGroundTruth.getElement(x - 1), evaluated.getElement(y - 1));
+                createBackTrace(distanceMatrix, evaluated, x - 1, y - 1);
             } else if (distanceMatrix[x - 1][y] == minimum) {
                 mLogger.stackMessage("Deletion of " + mGroundTruth.getElement(x - 1));
                 createBackTrace(distanceMatrix, evaluated, x - 1, y);
@@ -72,6 +76,39 @@ public class LevenshteinComparator extends Comparator {
         }
         else
             createBackTrace(distanceMatrix, evaluated, x - 1, y - 1);
+    }
+
+    // iteratve version
+    private void createBackTrace(float[][] distanceMatrix, MusicXMLFile evaluated/*, int x, int y*/) {
+        int x = mGroundTruth.length(), y = evaluated.length();
+        Queue<Float> q = new LinkedList<>();
+        q.add(distanceMatrix[x][y]);
+        for ( ; q.size() != 0; ) {
+            float current = q.remove();
+            if (x == 0 && y == 0)
+                return ;
+            float minimum = minimum(distanceMatrix[x - 1][y - 1], distanceMatrix[x - 1][y], distanceMatrix[x][y - 1]);
+            if (minimum < current) {
+                if (distanceMatrix[x - 1][y - 1] == minimum) {
+                    mLogger.stackMessage("Substitution of " + mGroundTruth.getElement(x - 1) + " with " + evaluated.getElement(y - 1));
+                    mErrorClassifier.compareElements(mGroundTruth.getElement(x - 1), evaluated.getElement(y - 1));
+                    q.add(distanceMatrix[x - 1][y - 1]);
+                    --x; --y;
+                } else if (distanceMatrix[x - 1][y] == minimum) {
+                    mLogger.stackMessage("Deletion of " + mGroundTruth.getElement(x - 1));
+                    q.add(distanceMatrix[x - 1][y]);
+                    --x;
+                } else if (distanceMatrix[x][y - 1] == minimum) {
+                    mLogger.stackMessage("Addition of " + evaluated.getElement(y - 1));
+                    q.add(distanceMatrix[x][y - 1]);
+                    --y;
+                }
+            }
+            else {
+                q.add(distanceMatrix[x - 1][y - 1]);
+                --x; --y;
+            }
+        }
     }
 
     private void printBackTrace() {

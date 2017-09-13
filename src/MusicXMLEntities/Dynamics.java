@@ -41,11 +41,11 @@ public class Dynamics extends MusicElement {
 
     @Override
     public ArrayList<ComparisonResult> inDepthComparison(MusicElement element) {
-        if (element == null)
-            return null;
-        if (!Dynamics.class.isAssignableFrom(element.getClass()))
-            return null;
         ArrayList<ComparisonResult> results = new ArrayList<>();
+        if (element == null)
+            return results;
+        if (!Dynamics.class.isAssignableFrom(element.getClass()))
+            return results;
         final Dynamics dyn = (Dynamics) element;
         if (!mType.equals(dyn.mType))
             results.add(ComparisonResult.DYNAMIC);

@@ -46,7 +46,7 @@ public class Main {
              ** Computing edit distance of files with or without backtrace
               */
             Comparator tiny = new LevenshteinComparator(tinyFile, true);
-            Comparator medium = new LevenshteinComparator(file, false);
+            Comparator medium = new LevenshteinComparator(file, true);
             Comparator big = new LevenshteinComparator(bigFile, true);
             //Comparator audiveris = new LevenshteinComparator(audiveris1, false);
 /*

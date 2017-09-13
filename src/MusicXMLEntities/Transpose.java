@@ -51,7 +51,7 @@ public class Transpose extends MusicElement {
 
     @Override
     public ArrayList<ComparisonResult> inDepthComparison(MusicElement element) {
-        return null;
+        return new ArrayList<>();
     }
 
     @Override

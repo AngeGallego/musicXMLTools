@@ -47,7 +47,7 @@ public class Chord extends MusicElement implements Iterable<Note> {
 
     @Override
     public ArrayList<ComparisonResult> inDepthComparison(MusicElement element) {
-        return null;
+        return new ArrayList<>();
     }
 
     @Override

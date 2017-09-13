@@ -60,7 +60,7 @@
         <note default-x="148.50" default-y="-45.00">
             <pitch> <!-- harmonic -->
                 <step>D</step>
-                <octave>4</octave>
+                <octave>6</octave>
             </pitch>
             <duration>1</duration> <!-- rythmic -->
             <voice>1</voice>

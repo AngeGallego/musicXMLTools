@@ -1,7 +1,7 @@
 <part id="P1">
     <measure number="1" width="190.00">
         <dynamics default-x="56" default-y="-67" halign="left">
-            <ppp/>
+            <pp/>
         </dynamics>
         <print>
             <system-layout>
@@ -13,7 +13,7 @@
             </system-layout>
         </print>
         <attributes>
-            <divisions>4</divisions>
+            <divisions>2</divisions>
             <key>
                 <fifths>2</fifths>
             </key>
@@ -59,12 +59,12 @@
         </note>
         <note default-x="148.50" default-y="-45.00">
             <pitch> <!-- harmonic -->
-                <step>T</step>
+                <step>D</step>
                 <octave>4</octave>
             </pitch>
-            <duration>4</duration> <!-- rythmic -->
+            <duration>1</duration> <!-- rythmic -->
             <voice>1</voice>
-            <type>toto</type>
+            <type>eighth</type>
             <stem>up</stem>
             <beam number="1">end</beam>
             <lyric number="1">

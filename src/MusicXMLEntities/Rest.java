@@ -54,11 +54,11 @@ public class Rest extends MusicElement {
 
     @Override
     public ArrayList<ComparisonResult> inDepthComparison(MusicElement element) {
-        if (element == null)
-            return null;
-        if (!Rest.class.isAssignableFrom(element.getClass()))
-            return null;
         ArrayList<ComparisonResult> results = new ArrayList<>();
+        if (element == null)
+            return results;
+        if (!Rest.class.isAssignableFrom(element.getClass()))
+            return results;
         final Rest rest = (Rest) element;
         if (!mDuration.equals(rest.mDuration))
             results.add(ComparisonResult.RYTHMIC);

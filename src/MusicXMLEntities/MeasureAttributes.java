@@ -73,15 +73,15 @@ public class MeasureAttributes extends MusicElement {
 
     @Override
     public ArrayList<ComparisonResult> inDepthComparison(MusicElement element) {
-        if (element == null)
-            return null;
-        if (!MeasureAttributes.class.isAssignableFrom(element.getClass()))
-            return null;
-        final MeasureAttributes measureAttributes = (MeasureAttributes) element;
         ArrayList<ComparisonResult> results = new ArrayList<>();
-        if (!mDivision.equals(measureAttributes.mDivision))
+        if (element == null)
+            return results;
+        if (!MeasureAttributes.class.isAssignableFrom(element.getClass()))
+            return results;
+        final MeasureAttributes measureAttributes = (MeasureAttributes) element;
+        if (!ComparisonUtils.compareHandleNull(mDivision, measureAttributes.mDivision))
             results.add(ComparisonResult.GLOBAL_RYTHMIC);
-        if (!mKey.equals(measureAttributes.mKey))
+        if (!ComparisonUtils.compareHandleNull(mKey, measureAttributes.mKey))
             results.add(ComparisonResult.GLOBAL_HARMONIC);
         return results;
     }
